@@ -29,10 +29,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Clone target repo
-      run: |
-        - name: Clone private repository
-        run: |
-          git clone --branch main https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/sample-nginx.git
+      run: git clone --branch main https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/sample-nginx.git
         #git clone --branch main https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/sample-nginx.git 
         #git clone --branch ${{ github.event.inputs.branch_name }} https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}.git cloned-repo
     

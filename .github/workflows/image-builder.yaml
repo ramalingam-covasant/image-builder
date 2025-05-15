@@ -2,6 +2,9 @@ name: Build and Push to ECR
 
 on:
   workflow_dispatch:
+permissions:
+  contents: read  # Default permission is "read" for contents of the repository.
+  pull-requests: write
     # inputs:
     #   repo_name:
     #     description: 'Repository name to clone'

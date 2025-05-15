@@ -2,19 +2,19 @@ name: Build and Push to ECR
 
 on:
   workflow_dispatch:
-    inputs:
-      repo_name:
-        description: 'Repository name to clone'
-        required: true
-      branch_name:
-        description: 'Branch name to use'
-        required: true
-      image_name:
-        description: 'Docker image name'
-        required: true
-      image_tag:
-        description: 'Image tag (e.g., latest, v1.0.0)'
-        required: true
+    # inputs:
+    #   repo_name:
+    #     description: 'Repository name to clone'
+    #     required: true
+    #   branch_name:
+    #     description: 'Branch name to use'
+    #     required: true
+    #   image_name:
+    #     description: 'Docker image name'
+    #     required: true
+    #   image_tag:
+    #     description: 'Image tag (e.g., latest, v1.0.0)'
+    #     required: true
 
 jobs:
   build-and-push:
@@ -30,30 +30,31 @@ jobs:
 
     - name: Clone target repo
       run: |
-        git clone --branch ${{ github.event.inputs.branch_name }} https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}.git cloned-repo
+        git clone --branch main https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/sample-nginx.git 
+        #git clone --branch ${{ github.event.inputs.branch_name }} https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}.git cloned-repo
     
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+    # - name: Configure AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v4
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws-region: ${{ env.AWS_REGION }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v2
+    # - name: Login to Amazon ECR
+    #   id: login-ecr
+    #   uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build Docker image
-      run: |
-        cd cloned-repo
-        docker build -t ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} .
+    # - name: Build Docker image
+    #   run: |
+    #     cd cloned-repo
+    #     docker build -t ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} .
 
-    - name: Tag image with ECR URI
-      run: |
-        IMAGE_URI=${{ steps.login-ecr.outputs.registry }}/${{ github.event.inputs.repo_name }}:${{ github.event.inputs.image_tag }}
-        docker tag ${{ github.event.inputs.image_tag }}:${{ github.event.inputs.image_tag }} $IMAGE_URI
-        echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+    # - name: Tag image with ECR URI
+    #   run: |
+    #     IMAGE_URI=${{ steps.login-ecr.outputs.registry }}/${{ github.event.inputs.repo_name }}:${{ github.event.inputs.image_tag }}
+    #     docker tag ${{ github.event.inputs.image_tag }}:${{ github.event.inputs.image_tag }} $IMAGE_URI
+    #     echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
 
-    - name: Push Docker image to ECR
-      run: |
-        docker push $IMAGE_URI
+    # - name: Push Docker image to ECR
+    #   run: |
+    #     docker push $IMAGE_URI

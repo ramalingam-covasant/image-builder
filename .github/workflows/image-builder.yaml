@@ -13,7 +13,7 @@ on:
         description: 'Image tag (e.g., latest, v1.0.0)'
         required: true
       workflow_uuid: 
-        description: "Create and assign an ID to github actions workflow for tracking.."
+        description: "Assign an ID to github actions workflow for tracking.."
         required: true
 
 jobs:

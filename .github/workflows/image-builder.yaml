@@ -24,8 +24,8 @@ jobs:
       AWS_REGION: eu-north-1
   
     steps:
-      - name: test workflow
-        run: echo "Test"
+      - name: Log the workflow UUID
+        run: echo "Workflow UUID: ${{ github.event.inputs.workflow_uuid }}"
     # - name: Checkout this repo
     #   uses: actions/checkout@v4
 

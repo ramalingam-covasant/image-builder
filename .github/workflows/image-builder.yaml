@@ -25,7 +25,7 @@ jobs:
   
     steps:
       - name: Log the workflow UUID
-        run: echo "Workflow UUID: ${{ github.event.inputs.workflow_uuid }}"
+        run: echo "${{ github.event.inputs.workflow_uuid }}"
     # - name: Checkout this repo
     #   uses: actions/checkout@v4
 
